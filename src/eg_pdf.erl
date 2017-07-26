@@ -135,7 +135,6 @@ init_pdf_context()->
 %-spec new() -> pdf().
 %% @doc Initiates PDF building process, returns a handle to use in other functions.
 new()->
-    %io:format("New pdf~n",[]),
     {ok, PDF} = start_link( [init_pdf_context(), <<>>] ),
     PDF.
 
@@ -718,7 +717,7 @@ inBuiltFonts() ->
 %%--------------------------------------------------------------------
 %% @private
 start_link(Init) ->
-    gen_server:start_link({local,pdf}, ?MODULE, Init, []).
+    gen_server:start_link(?MODULE, Init, []).
 
 %%====================================================================
 %% gen_server callbacks
