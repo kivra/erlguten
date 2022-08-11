@@ -5,3 +5,4 @@ apps/erlguten/ebin
 dev/*
 rel/erlguten
 .DS_Store
+_build
