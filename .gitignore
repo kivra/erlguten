@@ -6,3 +6,4 @@ dev/*
 rel/erlguten
 .DS_Store
 _build
+.rebar3
