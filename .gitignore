@@ -5,3 +5,6 @@ apps/erlguten/ebin
 dev/*
 rel/erlguten
 .DS_Store
+_build
+.rebar3
+ebin/erlguten.app
