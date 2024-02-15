@@ -448,7 +448,7 @@ text_transform(PID, A, B, C, D, E, F)->
 translate(PID, X, Y)->
     append_stream(PID, eg_pdf_op:translate(X,Y)).
 
-scale(PID, ScaleX, ScaleY) when is_integer(ScaleX), is_integer(ScaleY)->
+scale(PID, ScaleX, ScaleY)->
     append_stream(PID, eg_pdf_op:scale(ScaleX, ScaleY)).
 
 rotate(PID, Angle)->

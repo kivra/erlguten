@@ -320,7 +320,7 @@ text_transform(A, B, C, D, E, F)->
 translate(X,Y)->
     transform(1,0,0,1,X,Y).
 
-scale(ScaleX, ScaleY) when is_integer(ScaleX), is_integer(ScaleY)->
+scale(ScaleX, ScaleY)->
     transform(ScaleX, 0, 0, ScaleY, 0, 0).
 
 rotate(90)->  " 0 1 -1 0 0 0 cm\n";
