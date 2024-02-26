@@ -94,6 +94,7 @@
          set_title/2,
          set_word_space/2,
          skew/3,
+         svg/2, svg/3, svg/4,
          text/2,
          text_rotate/2,
          text_rotate_position/4,
@@ -557,7 +558,37 @@ image1(PID, FilePath, {size,Size})->
 	    {error, OpenError}
     end.
 
+%% @doc
+%% Inserts an SVG as a Path.
+%% svg(PID, FilePath)
+%% svg(PID, FilePath, Pos)
+%% svg(PID, FilePath, Pos, Scale)
+%% Pos is {X,Y}
+%% Scale is the scale. If the SVG uses 'mm' for the unit of its Height
+%% the SVG is scaled to points.
 
+svg(PID, FilePath) ->
+    svg(PID, FilePath, {0,0}).
+
+svg(PID, FilePath, {X,Y}) ->
+    svg(PID, FilePath, {X,Y}, 1).
+
+svg(PID, FilePath, {X,Y}, Scale) ->
+    save_state(PID),
+    case svg1(PID, FilePath, {X,Y}, Scale) of
+        {error, Reason} ->
+            {error, Reason};
+        ok ->
+            restore_state(PID)
+    end.
+
+svg1(PID, FilePath, {X,Y}, Scale) ->
+    case eg_svg2pdf:svg2pdf(PID, FilePath, X, Y, Scale) of
+        {error, Reason} ->
+            {error, Reason};
+        Stream ->
+            append_stream(PID, Stream)
+    end.
 
 %% Internals
 append_stream(PID, String)->

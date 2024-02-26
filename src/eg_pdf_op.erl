@@ -41,6 +41,7 @@
          image1/2,
          kernedtext/1,
          line/1, line/2, line/4,
+         line_append/1,
          lines/1,
          mirror_xaxis/1, mirror_yaxis/1,
          move_to/1,
