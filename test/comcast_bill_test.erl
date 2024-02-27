@@ -29,13 +29,13 @@
 
 -module(comcast_bill_test).
 -include_lib("eunit/include/eunit.hrl").
--define(IMAGE_DIR, "../test/images/").
 %%
 %%  This produces an example Comcast bill.
 %%
 run_test()->
   ?debugMsg("Test Begin"),
   Start = now(),
+    ImageDir = filename:join([code:priv_dir(erlguten), "..", "test", "images"]),
     PDF = eg_pdf:new(),
     eg_pdf:set_pagesize(PDF,letter),
     eg_pdf:set_page(PDF,1),
@@ -60,7 +60,7 @@ run_test()->
     eg_pdf:set_stroke_color(PDF,dodgerblue),
     eg_pdf:set_line_width(PDF,2),
     eg_pdf:line(PDF, 25,700,570,700), 
-    eg_pdf:image(PDF, ?IMAGE_DIR ++ "comcast_logo.jpg",{25,760},{height,20}),
+    eg_pdf:image(PDF, filename:join(ImageDir, "comcast_logo.jpg"),{25,760},{height,20}),
     eg_pdf:set_fill_gray(PDF, 0.0),
     eg_pdf:set_font(PDF,"Helvetica", 10),
     eg_pdf_lib:moveAndShow(PDF, 30, 705,  "Contact us:"),  
@@ -103,10 +103,11 @@ run_test()->
     eg_pdf:set_fill_color(PDF,yellowgreen),
     eg_pdf:round_rect(PDF, {320,470}, {250,40}, 20),
     eg_pdf:path(PDF, fill),
-    eg_pdf:restore_state(PDF),  
-    
-    eg_pdf:image(PDF, ?IMAGE_DIR ++ "high_speed_internet.jpg",{322,543},{height,15}), 
-    
+    eg_pdf:restore_state(PDF),
+
+    eg_pdf:image(PDF, filename:join(ImageDir, "high_speed_internet.jpg"),
+                 {322,543},{height,15}),
+
     eg_pdf:set_fill_gray(PDF, 1.0),
     eg_pdf:set_font(PDF,"Helvetica", 14),
     eg_pdf_lib:moveAndShow(PDF, 325,680,                    "Monthly Statement Summary"),
@@ -167,7 +168,7 @@ run_test()->
     CouponLine = "Detach and enclose this coupon with your payment. Please write your account number on your check or money order. Do not send cash.",
     eg_pdf_lib:moveAndShow(PDF, 277 - round(eg_pdf:get_string_width(PDF, "Helvetica", 8, CouponLine)/2),240,CouponLine),      
 
-    eg_pdf:image(PDF, ?IMAGE_DIR ++ "comcast_logo.jpg",{50,200},{height,20}),
+    eg_pdf:image(PDF, "comcast_logo.jpg",{50,200},{height,20}),
     
     eg_pdf:set_font(PDF,"Helvetica", 8),    
     eg_pdf_lib:moveAndShow(PDF, 80,180,"27800 FRANKLIN RD"),  
@@ -228,8 +229,9 @@ run_test()->
     eg_pdf:set_dash(PDF, solid),
     eg_pdf:set_stroke_color(PDF,dodgerblue),
     eg_pdf:set_line_width(PDF,2),
-    eg_pdf:line(PDF, 25,700,570,700), 
-    eg_pdf:image(PDF, ?IMAGE_DIR ++ "comcast_logo.jpg",{25,760},{height,20}),
+    eg_pdf:line(PDF, 25,700,570,700),
+    eg_pdf:image(PDF, filename:join(ImageDir, "comcast_logo.jpg"),
+                 {25,760},{height,20}),
 
     eg_pdf:set_fill_gray(PDF, 0.0),
     eg_pdf:set_font(PDF,"Helvetica-Bold", 10),
@@ -238,7 +240,8 @@ run_test()->
     eg_pdf_lib:moveAndShow(PDF, 220,705,  "1-800-391-3000"),  
     
     eg_pdf_lib:moveAndShow(PDF, 25,735,"Service Details"),
-    eg_pdf:image(PDF, ?IMAGE_DIR ++ "high_speed_internet.jpg",{25,665},{height,25}),    
+    eg_pdf:image(PDF, filename:join(ImageDir, "high_speed_internet.jpg"),
+                 {25,665},{height,25}),
     eg_pdf:save_state(PDF),
     eg_pdf:set_fill_color(PDF,orange),
     eg_pdf:round_rect(PDF, {50,665},{250,20}, 10),
