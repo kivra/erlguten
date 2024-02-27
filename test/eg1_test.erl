@@ -29,6 +29,7 @@
 
 run_test()->
     ?debugMsg("Begin Test"),
+    ImageDir = filename:join([code:priv_dir(erlguten), "..", "test", "images"]),
     PDF = eg_pdf:new(),
     eg_pdf:set_pagesize(PDF,a4),
     ?assert(eg_pdf:get_mediabox(PDF) =:= {0, 0, 595, 842}),
@@ -42,9 +43,12 @@ run_test()->
     draft(PDF),
 
     eg_pdf:set_page(PDF,1),
-    eg_pdf:image(PDF,'../testing/joenew.jpg',{390,440},{height,140}),
-    eg_pdf:image(PDF,'../testing/joenew.jpg',{390,200},{width,140}),
-    eg_pdf:image(PDF,'../testing/joenew.jpg',{190,300},{140,140}),
+    eg_pdf:image(PDF,filename:join(ImageDir, "joenew.jpg"),
+                 {390,440},{height,140}),
+    eg_pdf:image(PDF,filename:join(ImageDir, "joenew.jpg"),
+                 {390,200},{width,140}),
+    eg_pdf:image(PDF,filename:join(ImageDir, "joenew.jpg"),
+                 {190,300},{140,140}),
     eg_pdf:begin_text(PDF),
     eg_pdf:set_font(PDF, "Times-Italic", 240),
     eg_pdf:set_text_pos(PDF, 60,600),
