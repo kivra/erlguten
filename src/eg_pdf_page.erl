@@ -172,7 +172,7 @@ get_page(PageNo, Objects) ->
     end.
 
 get_tree_obj(Objects) ->
-    Pages = eg_pdf_lib:get_objects_of_type("Page", Objects),
+    Pages = eg_pdf_lib:get_objects_of_type("Pages", Objects),
     DropWhile = fun (P) -> eg_pdf_lib:pdf_object_dict_item("Parent", P) =/=
 			   undefined
 		end,
