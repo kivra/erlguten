@@ -8,3 +8,5 @@ rel/erlguten
 _build
 .rebar3
 ebin/erlguten.app
+
+/*.pdf
