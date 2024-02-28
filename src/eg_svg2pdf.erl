@@ -159,31 +159,31 @@ transform(undefined) ->
     [];
 transform(TransStr) ->
     Tokens = string:tokens(TransStr, " "),
-    parse_transform(Tokens, []).
+    parse_transforms(Tokens, []).
 
-parse_transform(["translate("++Rest | Tail], Acc) ->
+parse_transforms(["translate("++Rest | Tail], Acc) ->
     Values = no_commas(Rest),
     {ok, {[X, Y], _}} = get_floats(2, Values),
     Op = eg_pdf_op:translate(X, Y),
-    parse_transform(Tail, [Op | Acc]);
-parse_transform(["rotate("++Rest | Tail], Acc) ->
+    parse_transforms(Tail, [Op | Acc]);
+parse_transforms(["rotate("++Rest | Tail], Acc) ->
     Values = no_commas(Rest),
     {ok, [Angle], _} = get_floats(1, Values),
     Op = eg_pdf_op:rotate(Angle),
-    parse_transform(Tail, [Op | Acc]);
-parse_transform(["scale("++Rest | Tail], Acc) ->
+    parse_transforms(Tail, [Op | Acc]);
+parse_transforms(["scale("++Rest | Tail], Acc) ->
     case string:tokens(Rest, ",") of
         [XStr, YStr] ->
             {ok, {[X], _}} = get_floats(1, XStr),
             {ok, {[Y], _}} = get_floats(1, YStr),
             Op = eg_pdf_op:scale(X, Y),
-            parse_transform(Tail, [Op | Acc]);
+            parse_transforms(Tail, [Op | Acc]);
         [XStr] ->
             {ok, {[X], _}} = get_floats(1, XStr),
             Op = eg_pdf_op:scale(X, X),
-            parse_transform(Tail, [Op | Acc])
+            parse_transforms(Tail, [Op | Acc])
     end;
-parse_transform([], Acc) ->
+parse_transforms([], Acc) ->
     lists:reverse(Acc).
 
 style(Path, Ctx) ->
