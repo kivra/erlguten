@@ -27,7 +27,8 @@ flip_and_size(Header, Ctx) ->
     case HeightUnit of
         "" ->
             [eg_pdf_op:translate(PosX, PosY),
-             eg_pdf_op:mirror_xaxis(Scale*Height)
+             eg_pdf_op:mirror_xaxis(Scale*Height),
+             eg_pdf_op:scale(Scale, Scale)
             ];
         "mm" ->
             %% Scale from mm to points
